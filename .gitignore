@@ -1,0 +1,12 @@
+build/
+.gradle/
+.gradletasknamecache
+.idea/
+.fleet/
+out/
+
+.DS_Store
+
+local.properties
+
+hs_err_pid*.log

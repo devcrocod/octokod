@@ -1,0 +1,12 @@
+package io.github.devcrocod.octokod.models.res
+
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
+public data class ApiError(
+    val message: String,
+    @SerialName("documentation_url")
+    val documentationUrl: String,
+    val error: List<ApiErrorDetail>
+)
