@@ -10,7 +10,6 @@ import platform.posix.fopen
 @OptIn(ExperimentalForeignApi::class)
 actual fun loadResource(resourceName: String): String? {
     val path = "src/commonTest/resources/$resourceName"
-    println(fopen(path, "r"))
     val file = fopen(path, "r")
         ?: throw Exception("Cannot open input file $path")
 

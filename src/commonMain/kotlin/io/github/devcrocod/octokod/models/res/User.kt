@@ -59,15 +59,15 @@ public data class User(
     val createdAt: LocalDateTime,
     @Contextual
     val updatedAt: LocalDateTime,
+    val twoFactorAuthentication: Boolean?,
+    val plan: Plan,
+    @Contextual
+    val suspendedAt: LocalDateTime?,
     val privateGists: Int,
     val totalPrivateRepos: Int,
     val ownedPrivateRepos: Int,
     val diskUsage: Int,
     val collaborators: Int,
-    val twoFactorAuthentication: Boolean? = null, // required for private user? but for public don't need
-    val plan: Plan,
-    @Contextual
-    val suspendedAt: LocalDateTime?,
-    val businessPlus: Boolean? = null,
-    val ldapDn: String? = null
+    val businessPlus: Boolean?,
+    val ldapDn: String?
 )
