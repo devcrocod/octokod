@@ -7,12 +7,6 @@ import kotlinx.serialization.Serializable
 public data class Plan(
     val collaborators: Long,
     val name: String,
-    @SerialName("private_repos")
-    val privateRepos: Long,
     val space: Long,
-    @SerialName("billing_email")
-    val billingEmail: String,
-    @SerialName("filled_seats")
-    val filledSeats: Int,
-    val seats: Int
+    val privateRepos: Long,
 )

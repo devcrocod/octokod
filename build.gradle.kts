@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
-    kotlin("multiplatform") version "1.9.0"
-    kotlin("plugin.serialization") version "1.9.0"
+    kotlin("multiplatform") version "1.9.20-Beta2"
+    kotlin("plugin.serialization") version "1.9.20-Beta2"
 }
 
 
@@ -23,7 +23,7 @@ kotlin {
             kotlinOptions.jvmTarget = "11"
         }
         testRuns["test"].executionTask.configure {
-            useJUnitPlatform()
+            useJUnit()
         }
     }
 
@@ -42,42 +42,42 @@ kotlin {
     macosX64()
     macosArm64()
 
-    val ktor_version: String by project
+    val ktorVersion: String by project
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-core:$ktor_version")
-                implementation("io.ktor:ktor-client-logging:$ktor_version")
-                implementation("io.ktor:ktor-client-auth:$ktor_version")
-                implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
-                implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
+                implementation("io.ktor:ktor-client-core:$ktorVersion")
+                implementation("io.ktor:ktor-client-logging:$ktorVersion")
+                implementation("io.ktor:ktor-client-auth:$ktorVersion")
+                implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
-                implementation("io.ktor:ktor-client-mock:$ktor_version")
+                implementation("io.ktor:ktor-client-mock:$ktorVersion")
             }
         }
         val jvmMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-okhttp:$ktor_version")
+                implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
             }
         }
         val mingwX64Main by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-winhttp:$ktor_version")
+                implementation("io.ktor:ktor-client-winhttp:$ktorVersion")
             }
         }
         val linuxMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-cio:$ktor_version")
+                implementation("io.ktor:ktor-client-cio:$ktorVersion")
             }
         }
         val appleMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-darwin:$ktor_version")
+                implementation("io.ktor:ktor-client-darwin:$ktorVersion")
             }
         }
     }

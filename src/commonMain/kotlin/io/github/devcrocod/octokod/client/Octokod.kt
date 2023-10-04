@@ -6,7 +6,6 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.serialization.kotlinx.json.*
-import io.ktor.util.*
 import io.ktor.utils.io.core.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.serialization.json.Json
@@ -30,6 +29,7 @@ public fun <T : HttpClientEngineConfig> Octokod(
             json(Json {
                 prettyPrint = true
                 isLenient = true
+                ignoreUnknownKeys = true
             })
         }
     }
@@ -55,5 +55,3 @@ public class Octokod internal constructor(
         client.close()
     }
 }
-
-public data class Customer(val id: Int, val firstName: String, val lastName: String)

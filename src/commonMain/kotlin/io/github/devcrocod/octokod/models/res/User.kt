@@ -1,52 +1,73 @@
 package io.github.devcrocod.octokod.models.res
 
-import kotlinx.datetime.LocalDateTime
-import kotlinx.serialization.SerialName
+import kotlinx.datetime.*
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
+
+public object LocalDateTimeSerializer : KSerializer<LocalDateTime> {
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("LocalDateTime", PrimitiveKind.STRING)
+
+    override fun serialize(encoder: Encoder, value: LocalDateTime) {
+        encoder.encodeString(value.toInstant(TimeZone.UTC).toString())
+    }
+
+    override fun deserialize(decoder: Decoder): LocalDateTime {
+        return Instant.parse(decoder.decodeString()).toLocalDateTime(TimeZone.UTC)
+    }
+}
+
 
 @Serializable
-@SerialName("user")
 public data class User(
-    @SerialName("avatar_url")
-    override val avatarUrl: String,
-    override val bio: String,
-    override val blog: String,
-    override val collaborators: Int,
-    override val company: String,
-    @SerialName("created_at")
-    override val createdAt: LocalDateTime,
-    @SerialName("updated_at")
-    val updatedAt: LocalDateTime,
-    @SerialName("disk_usage")
-    override val diskUsage: Int,
-    override val email: String,
-    override val followers: Int,
-    override val following: Int,
-    override val hireable: Boolean?,
-    @SerialName("html_url")
-    override val htmlUrl: String,
-    @SerialName("total_private_repos")
-    override val totalPrivateRepos: Int,
-    override val id: Int,
-    override val location: String,
-    override val login: String,
-    override val name: String,
-    @SerialName("node_id")
-    override val nodeId: String,
-    @SerialName("owned_private_repos")
-    override val ownedPrivateRepos: Int,
-    override val plan: Plan,
-    @SerialName("private_gists")
-    override val privateGists: Int,
-    @SerialName("public_gists")
-    override val publicGists: Int,
-    @SerialName("public_repos")
-    override val publicRepos: Int,
-    override val url: String,
-    val permissions: RepositoryPermissions,
-    @SerialName("site_admin")
+    val login: String,
+    val id: Int,
+    val nodeId: String,
+    val avatarUrl: String,
+    val gravatarId: String?,
+    val url: String,
+    val htmlUrl: String,
+    val followersUrl: String,
+    val followingUrl: String,
+    val gistsUrl: String,
+    val starredUrl: String,
+    val subscriptionsUrl: String,
+    val organizationsUrl: String,
+    val reposUrl: String,
+    val eventsUrl: String,
+    val receivedEventsUrl: String,
+    val type: String,
     val siteAdmin: Boolean,
-    @SerialName("ldap_distinguished_name")
-    val ldapDistinguishedName: String,
-    val suspendedAt: LocalDateTime?
-) : Account(AccountType.User)
+    val name: String?,
+    val company: String?,
+    val blog: String?,
+    val location: String?,
+    val email: String?,
+    val hireable: Boolean?,
+    val bio: String?,
+    val twitterUsername: String?,
+    val publicRepos: Int,
+    val publicGists: Int,
+    val followers: Int,
+    val following: Int,
+    @Contextual
+    val createdAt: LocalDateTime,
+    @Contextual
+    val updatedAt: LocalDateTime,
+    val privateGists: Int,
+    val totalPrivateRepos: Int,
+    val ownedPrivateRepos: Int,
+    val diskUsage: Int,
+    val collaborators: Int,
+    val twoFactorAuthentication: Boolean? = null, // required for private user? but for public don't need
+    val plan: Plan,
+    @Contextual
+    val suspendedAt: LocalDateTime?,
+    val businessPlus: Boolean? = null,
+    val ldapDn: String? = null
+)
