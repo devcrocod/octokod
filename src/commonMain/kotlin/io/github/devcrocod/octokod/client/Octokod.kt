@@ -16,7 +16,19 @@ import kotlin.coroutines.CoroutineContext
 public annotation class GithubRestDsl
 
 @GithubRestDsl
-public expect fun Octokod(block: HttpClientConfig<*>.() -> Unit = {}): Octokod
+public fun Octokod(block: HttpClientConfig<*>.() -> Unit = {}): Octokod {
+    val client = HttpClient {
+        block()
+        install(ContentNegotiation) {
+            json(Json {
+                prettyPrint = true
+                isLenient = true
+                ignoreUnknownKeys = true
+            })
+        }
+    }
+    return Octokod(client)
+}
 
 @GithubRestDsl
 public fun <T : HttpClientEngineConfig> Octokod(
