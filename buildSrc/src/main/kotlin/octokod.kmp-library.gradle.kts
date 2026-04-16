@@ -1,0 +1,93 @@
+@file:OptIn(ExperimentalWasmDsl::class)
+
+import org.gradle.api.artifacts.VersionCatalogsExtension
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
+plugins {
+    id("octokod.maven-publish")
+    id("octokod.dokka")
+    id("org.jetbrains.kotlin.multiplatform")
+    id("com.android.kotlin.multiplatform.library")
+}
+
+val libs = the<VersionCatalogsExtension>().named("libs")
+
+kotlin {
+    explicitApi()
+
+    jvmToolchain(21)
+
+    jvm {
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_11
+        }
+        tasks.withType<Test>().configureEach {
+            useJUnitPlatform()
+        }
+    }
+
+    android {
+        namespace = "io.github.devcrocod.${project.name.replace("-", ".")}"
+        compileSdk = libs.findVersion("android-compileSdk").get().toString().toInt()
+        minSdk = libs.findVersion("android-minSdk").get().toString().toInt()
+
+        withJava()
+        withHostTestBuilder {}.configure {}
+        withDeviceTestBuilder {
+            sourceSetTreeName = "test"
+        }
+
+        compilations.configureEach {
+            compileTaskProvider.configure {
+                compilerOptions.jvmTarget.set(JvmTarget.JVM_11)
+            }
+        }
+    }
+
+    // iOS
+    iosArm64()
+    iosSimulatorArm64()
+
+    // Desktop
+    macosArm64()
+    linuxArm64()
+    linuxX64()
+    mingwX64()
+
+    // WatchOS
+    watchosArm32()
+    watchosArm64()
+    watchosDeviceArm64()
+    watchosSimulatorArm64()
+
+    // tvOS
+    tvosArm64()
+    tvosSimulatorArm64()
+
+
+    // JS
+    js {
+        browser()
+        nodejs()
+        binaries.library()
+    }
+
+    // Wasm
+    wasmJs {
+        browser()
+        nodejs()
+        binaries.library()
+    }
+
+    wasmWasi {
+        nodejs()
+        binaries.library()
+    }
+
+    sourceSets {
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+        }
+    }
+}
