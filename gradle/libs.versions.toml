@@ -11,7 +11,7 @@ bcv = "0.18.1"
 korro = "0.1.6"
 
 ktor = "3.4.2"
-kotlinx-datetime = "0.7.1"
+kotlinx-datetime = "0.8.0-0.6.x-compat"
 
 [libraries]
 # build plugins
