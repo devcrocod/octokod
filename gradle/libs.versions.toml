@@ -6,7 +6,7 @@ kotlin = "2.4.21"
 android-minSdk = "24"
 android-compileSdk = "36"
 vanniktechMavenPublish = "0.37.0"
-dokka = "2.2.0"
+dokka = "2.3.0"
 bcv = "0.18.2"
 korro = "0.2.2"
 
